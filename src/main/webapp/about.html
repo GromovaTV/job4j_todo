@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <title>TODO</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            cache: false,
+            type: 'GET',
+            url: '/todo/about',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log(data.name);
+            console.log(data.description);
+            var status = "Не выполнено";
+            if (data.done) {
+                status = "Выполнено";
+            }
+            $('#name').text(data.name);
+            $('#done').text(status);
+            $('#created').text(data.created);
+            $('#description').text(data.description);
+            console.log("done");
+        }).fail(function () {
+            console.log("Error");
+        });
+    });
+</script>
+<script>
+    function completeTask() {
+        console.log("Start");
+        $.ajax({
+            cache: false,
+            url: '/todo/complete',
+            type: 'POST'
+        }).done(function () {
+            console.log("Done");
+        }).fail(function () {
+            console.log("Error");
+        });
+    }
+</script>
+<script>
+    function editTask() {
+        window.location.href = "/todo/edit.html";
+    }
+</script>
+<script>
+    function deleteTask() {
+        console.log("Start");
+        $.ajax({
+            cache: false,
+            url: '/todo/delete',
+            type: 'POST'
+        }).done(function () {
+            window.location.href = "/todo/welcome/index.html";
+        }).fail(function () {
+            console.log("Error");
+        });
+    }
+</script>
+<body>
+<div class="container">
+    <div class="row">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/todo/">Все</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/todo/done.html">Выполненные</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/todo/new.html">Новые</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="card" style="width: 100%">
+            <div class="card-header">
+                О задании
+            </div>
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Название: <span id="name"></span></h4>
+                        <p>Состояние: <span id="done"></span></p>
+                        <p>Создано: <span id="created"></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Описание</h4>
+                        <p id="description"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" style="width: 100%">
+            <div class="card-body">
+                <button type="submit" class="btn btn-default" onclick="return completeTask();">Выполнить</button>
+                <button type="submit" class="btn btn-default" onclick="return editTask();">Редактировать</button>
+                <button type="submit" class="btn btn-default" onclick="return deleteTask();">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
