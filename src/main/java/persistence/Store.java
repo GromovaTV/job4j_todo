@@ -2,12 +2,12 @@ package persistence;
 
 import model.Item;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface Store {
-    Collection<Item> findAll();
-    Collection<Item> filterByStatus(boolean status);
-    Collection<Item> findRecent();
+    List findAll();
+    List filterByStatus(boolean status);
+    List findRecent();
     Item findById(int id);
     void add(Item item);
     void delete(int id);
