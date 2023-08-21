@@ -19,6 +19,6 @@ public class AddService {
     public void handlePost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Item item = GSON.fromJson(req.getReader(), Item.class);
         item.setCreated(Timestamp.valueOf(LocalDateTime.now()));
-        HbnStore.instOf().add(item);
+        HbnStore.instOf().addItem(item);
     }
 }

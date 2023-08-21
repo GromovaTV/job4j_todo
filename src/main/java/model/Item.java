@@ -16,7 +16,9 @@ public class Item {
     private String description = "";
     private Timestamp created;
     private boolean done;
-
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Item() {
     }
@@ -33,6 +35,14 @@ public class Item {
         this.description = description;
         this.created = created;
         this.done = done;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getId() {
@@ -81,6 +91,7 @@ public class Item {
                 + "id=" + id + '\''
                 + ", name='" + name + '\''
                 + ", created=" + created + '\''
+                + ", user=" + user + '\''
                 + ", done=" + done
                 + '}';
     }

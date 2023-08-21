@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Item;
+import model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -56,6 +57,17 @@ public class HbnStore implements Store, AutoCloseable {
                 }
         );
     }
+//
+//    @Override
+//    public Role findRoleById(int id) {
+//        return this.tx(
+//                session -> {
+//                    final Query query = session.createQuery("from model.Role as r where r.id=:id");
+//                    query.setParameter("id", id);
+//                    return (Role) query.uniqueResult();
+//                }
+//        );
+//    }
 
     @Override
     public List findAll() {
@@ -95,10 +107,18 @@ public class HbnStore implements Store, AutoCloseable {
     }
 
     @Override
-    public void add(Item item) {
+    public void addItem(Item item) {
         this.tx(session -> {
             session.save(item);
             return item;
+        });
+    }
+
+    @Override
+    public void addUser(User user) {
+        this.tx(session -> {
+            session.save(user);
+            return user;
         });
     }
 
@@ -138,6 +158,17 @@ public class HbnStore implements Store, AutoCloseable {
                     query.setParameter("id", id);
                     query.executeUpdate();
                     return null;
+                }
+        );
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return this.tx(
+                session -> {
+                    final Query query = session.createQuery("from model.User as u where u.email=:email");
+                    query.setParameter("email", email);
+                    return (User) query.uniqueResult();
                 }
         );
     }
