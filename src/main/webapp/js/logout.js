@@ -5,7 +5,6 @@ function logout() {
         url: '/todo/logout.do',
         type: 'GET'
     }).done(function () {
-        console.log("Done");
     }).fail(function () {
         console.log("Error");
     });

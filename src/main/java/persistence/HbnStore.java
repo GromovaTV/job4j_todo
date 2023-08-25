@@ -1,5 +1,6 @@
 package persistence;
 
+import model.Category;
 import model.Item;
 import model.User;
 import org.hibernate.Session;
@@ -40,6 +41,7 @@ public class HbnStore implements Store, AutoCloseable {
             tx.commit();
             return rsl;
         } catch (final Exception e) {
+            e.printStackTrace();
             session.getTransaction().rollback();
             throw e;
         } finally {
@@ -51,42 +53,32 @@ public class HbnStore implements Store, AutoCloseable {
     public Item findById(int id) {
         return this.tx(
                 session -> {
-                    final Query query = session.createQuery("from model.Item as i where i.id=:id");
+                    final Query query = session.createQuery("select distinct i from model.Item i join fetch i.ctgrs where i.id=:id");
                     query.setParameter("id", id);
                     return (Item) query.uniqueResult();
                 }
         );
     }
-//
-//    @Override
-//    public Role findRoleById(int id) {
-//        return this.tx(
-//                session -> {
-//                    final Query query = session.createQuery("from model.Role as r where r.id=:id");
-//                    query.setParameter("id", id);
-//                    return (Role) query.uniqueResult();
-//                }
-//        );
-//    }
 
     @Override
-    public List findAll() {
+    public List<Item> findAll() {
         return this.tx(
                 session -> {
-                    final Query query = session.createQuery("from model.Item");
-                    return query.list();
+                    final Query query = session.createQuery("select distinct i from model.Item i join fetch i.ctgrs");
+                    List<Item> list = query.list();
+                    return list;
                 }
         );
-
     }
 
     @Override
-    public List filterByStatus(boolean status) {
+    public List<Item> filterByStatus(boolean status) {
         return this.tx(
                 session -> {
-                    final Query query = session.createQuery("from model.Item as i where i.done=:done");
+                    final Query query = session.createQuery("select distinct i from model.Item i join fetch i.ctgrs where i.done=:done");
                     query.setParameter("done", status);
-                    return query.list();
+                    List<Item> list = query.list();
+                    return list;
                 }
         );
 
@@ -96,7 +88,7 @@ public class HbnStore implements Store, AutoCloseable {
     public List findRecent() {
         return this.tx(
                 session -> {
-                    final Query query = session.createQuery("FROM model.Item as i WHERE i.created BETWEEN :startDate AND :endDate");
+                    final Query query = session.createQuery("select distinct i FROM model.Item i join fetch i.ctgrs WHERE i.created BETWEEN :startDate AND :endDate");
                     var now = Timestamp.valueOf(LocalDateTime.now());
                     var oneDayAgo = Timestamp.valueOf(LocalDateTime.now().plusDays(-1));
                     query.setParameter("startDate", oneDayAgo);
@@ -107,8 +99,22 @@ public class HbnStore implements Store, AutoCloseable {
     }
 
     @Override
-    public void addItem(Item item) {
+    public List findAllCategories() {
+        return this.tx(
+                session -> {
+                    final Query query = session.createQuery("from model.Category");
+                    return query.list();
+                }
+        );
+    }
+
+    @Override
+    public void addItem(Item item, String[] ids) {
         this.tx(session -> {
+            for (String id : ids) {
+                Category ctgr = session.find(Category.class, Integer.parseInt(id));
+                item.addCtgr(ctgr);
+            }
             session.save(item);
             return item;
         });

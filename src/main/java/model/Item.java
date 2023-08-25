@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "items")
@@ -19,6 +21,12 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Category> ctgrs = new HashSet<>();
+
+    public void addCtgr(Category ctgr) {
+        this.ctgrs.add(ctgr);
+    }
 
     public Item() {
     }
@@ -85,14 +93,24 @@ public class Item {
         this.description = description;
     }
 
+    public Set<Category> getCtgrs() {
+        return ctgrs;
+    }
+
+    public void setCtgrs(Set<Category> ctgrs) {
+        this.ctgrs = ctgrs;
+    }
+
     @Override
     public String toString() {
         return "Item{"
                 + "id=" + id + '\''
                 + ", name='" + name + '\''
+                + ", description='" + description + '\''
                 + ", created=" + created + '\''
+                + ", done=" + done + '\''
                 + ", user=" + user + '\''
-                + ", done=" + done
+                + ", ctgrs=" + ctgrs + '\''
                 + '}';
     }
 }

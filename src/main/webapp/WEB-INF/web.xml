@@ -10,17 +10,17 @@
   </filter>
   <filter-mapping>
     <filter-name>AuthFilter</filter-name>
-    <url-pattern>*.html</url-pattern>
+    <url-pattern>*.do</url-pattern>
   </filter-mapping>
   <welcome-file-list>
-    <welcome-file>/welcome/index.html</welcome-file>
+    <welcome-file>/login.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
     <servlet-name>IndexServlet</servlet-name>
     <servlet-class>controller.IndexServlet</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>NewServlet</servlet-name>
+    <servlet-name>RecentServlet</servlet-name>
     <servlet-class>controller.RecentServlet</servlet-class>
   </servlet>
   <servlet>
@@ -65,39 +65,39 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>IndexServlet</servlet-name>
-    <url-pattern>/all</url-pattern>
+    <url-pattern>/all.do</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>NewServlet</servlet-name>
-    <url-pattern>/new</url-pattern>
+    <servlet-name>RecentServlet</servlet-name>
+    <url-pattern>/new.do</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>DoneServlet</servlet-name>
-    <url-pattern>/done</url-pattern>
+    <url-pattern>/done.do</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>AddServlet</servlet-name>
-    <url-pattern>/add</url-pattern>
+    <url-pattern>/add.do</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>AboutServlet</servlet-name>
-    <url-pattern>/about</url-pattern>
+    <url-pattern>/about.do</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>CompleteTaskServlet</servlet-name>
-    <url-pattern>/complete</url-pattern>
+    <url-pattern>/complete.do</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>EditTaskServlet</servlet-name>
-    <url-pattern>/edit</url-pattern>
+    <url-pattern>/edit.do</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>SaveChangesServlet</servlet-name>
-    <url-pattern>/savechanges</url-pattern>
+    <url-pattern>/savechanges.do</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>DeleteTaskServlet</servlet-name>
-    <url-pattern>/delete</url-pattern>
+    <url-pattern>/delete.do</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>RegServlet</servlet-name>

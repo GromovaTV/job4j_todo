@@ -19,13 +19,27 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <title>TODO</title>
-    <script src="js/logout.js"></script>
+    <script src="js/find_categories.js"></script>
 </head>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+<script>
+    function logout() {
+        console.log(logout);
+        $.ajax({
+            cache: false,
+            url: '/todo/logout.do',
+            type: 'GET'
+        }).done(function () {
+        }).fail(function () {
+            console.log("Error");
+        });
+    }
+</script>
 <script>
     function addTask() {
         const name = $('#name').val();
         const descr = $('#descr').val();
+        const ctgrs = $('#cIds').val();
         if (name == "") {
             alert($('#name').attr('title'));
             return false;
@@ -34,19 +48,28 @@
             alert($('#descr').attr('title'));
             return false;
         }
+        if (ctgrs == "") {
+            alert('Выберите категорию');
+            return false;
+        }
+        console.log(name);
+        console.log(descr);
+        console.log(ctgrs);
         $.ajax({
             cache: false,
             type: 'POST',
-            url: '/todo/add',
+            url: '/todo/add.do',
             data: JSON.stringify({
                         name: name,
                         done: false,
-                        description: descr
-                    })
+                        description: descr,
+                        ctgrs: ctgrs
+                    }),
+            contentType: 'application/json; charset=UTF-8'
         }).done(function(){
-            window.location.href='http://localhost:8080/todo/welcome/index.html';
-        }).fail(function(err){
-            alert("Error:" + err);
+            window.location.href = "index.html";
+        }).fail(function(){
+            alert("error");
         });
     }
 </script>
@@ -55,7 +78,7 @@
     <div class="row">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="/todo/">Все</a>
+                <a class="nav-link" href="/todo/index.html">Все</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/todo/done.html">Выполненные</a>
@@ -64,7 +87,7 @@
                 <a class="nav-link" href="/todo/new.html">Новые</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/todo/welcome/index.html" onclick="logout();">Выйти</a>
+                <a class="nav-link" href="/todo/login.jsp" onclick="logout();">Выйти</a>
             </li>
         </ul>
     </div>
@@ -85,7 +108,14 @@
                         <input type="text" class="form-control" id="descr" name="descr"
                                title="Введите описание">
                     </div>
-                    <button type="submit" class="btn btn-primary" onclick="addTask()">Сохранить</button>
+                    <div class="form-group">
+                        <label class="col-form-label col-sm-3" for="cIds" style="font-weight: 900">Категории</label>
+                        <div class="col-sm-5">
+                            <select class="form-control" name="cIds" id="cIds" multiple>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="addTask()">Сохранить</button>
                 </form>
             </div>
         </div>

@@ -19,16 +19,27 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <title>TODO</title>
-    <script src="js/logout.js"></script>
-
 </head>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+<script>
+    function logout() {
+        console.log(logout);
+        $.ajax({
+            cache: false,
+            url: '/todo/logout.do',
+            type: 'GET'
+        }).done(function () {
+        }).fail(function () {
+            console.log("Error");
+        });
+    }
+</script>
 <script>
     $(document).ready(function () {
         $.ajax({
             cache: false,
             type: 'GET',
-            url: '/todo/about',
+            url: '/todo/about.do',
             dataType: 'json'
         }).done(function (data) {
             console.log(data.name);
@@ -40,6 +51,7 @@
             $('#name').text(data.name);
             $('#done').text(status);
             $('#created').text(data.created);
+            $('#ctgrs').text(data.ctgrs);
             $('#description').text(data.description);
             console.log("done");
         }).fail(function () {
@@ -52,7 +64,7 @@
         console.log("Start");
         $.ajax({
             cache: false,
-            url: '/todo/complete',
+            url: '/todo/complete.do',
             type: 'POST'
         }).done(function () {
             console.log("Done");
@@ -71,10 +83,10 @@
         console.log("Start");
         $.ajax({
             cache: false,
-            url: '/todo/delete',
+            url: '/todo/delete.do',
             type: 'POST'
         }).done(function () {
-            window.location.href = "/todo/welcome/index.html";
+            window.location.href = "index.html";
         }).fail(function () {
             console.log("Error");
         });
@@ -85,7 +97,7 @@
     <div class="row">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="/todo/">Все</a>
+                <a class="nav-link" href="/todo/index.html">Все</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/todo/done.html">Выполненные</a>
@@ -94,7 +106,7 @@
                 <a class="nav-link" href="/todo/new.html">Новые</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/todo/welcome/index.html" onclick="logout();">Выйти</a>
+                <a class="nav-link" href="/todo/login.jsp" onclick="logout();">Выйти</a>
             </li>
         </ul>
     </div>
@@ -109,6 +121,7 @@
                         <h4>Название: <span id="name"></span></h4>
                         <p>Состояние: <span id="done"></span></p>
                         <p>Создано: <span id="created"></span></p>
+                        <p>Категория: <span id="ctgrs"></span></p>
                     </div>
                     <div class="col-md-6">
                         <h4>Описание</h4>

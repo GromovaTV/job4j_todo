@@ -13,3 +13,8 @@ create table j_user (
   email TEXT UNIQUE,
   password TEXT
 );
+
+create table category (
+  id serial primary key,
+  name varchar(2000)
+);

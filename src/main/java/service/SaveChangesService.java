@@ -15,9 +15,12 @@ public class SaveChangesService {
     }
 
     public void handlePost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        System.out.println("START SAVE");
         Item item = GSON.fromJson(req.getReader(), Item.class);
+        System.out.println(item.toString());
         var context = req.getServletContext();
         int id = Integer.parseInt(context.getAttribute("id").toString());
         HbnStore.instOf().edit(id, item.getName(), item.getDescription(), item.isDone());
+        System.out.println("FINISH SAVE");
     }
 }

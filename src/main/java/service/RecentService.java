@@ -13,12 +13,14 @@ public class RecentService {
     private static final Gson GSON = new GsonBuilder().create();
 
     public void handleGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        System.out.println("START RECENT");
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
         String json = GSON.toJson(HbnStore.instOf().findRecent());
         output.write(json.getBytes(StandardCharsets.UTF_8));
         output.flush();
         output.close();
+        System.out.println("FINISH RECENT");
     }
 
     public void handlePost(HttpServletRequest req, HttpServletResponse resp) throws IOException {

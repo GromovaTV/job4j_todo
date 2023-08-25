@@ -15,7 +15,6 @@ public class RegServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         User user = HbnStore.instOf().findUserByEmail(req.getParameter("email"));
-//        Role userRole = HbnStore.instOf().findRoleById(2);
         if (user == null) {
             HbnStore.instOf().addUser(User.of(name, email, password));
             resp.sendRedirect(req.getContextPath() + "/welcome/index.html");

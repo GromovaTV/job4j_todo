@@ -19,15 +19,29 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <title>TODO</title>
-    <script src="js/logout.js"></script>
+    <script src="../js/logout.js"></script>
 </head>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+<script>
+    function logout() {
+        console.log(logout);
+        $.ajax({
+            cache: false,
+            url: '/todo/logout.do',
+            type: 'GET'
+        }).done(function () {
+            window.location.href = "/todo/login.jsp";
+        }).fail(function () {
+            console.log("Error");
+        });
+    }
+</script>
 <script>
     $(document).ready(function () {
         $.ajax({
             cache: false,
             type: 'GET',
-            url: '/todo/edit',
+            url: '/todo/edit.do',
             dataType: 'json'
         }).done(function (data) {
             console.log(data.name);
@@ -49,7 +63,7 @@
         console.log("Start");
         $.ajax({
             cache: false,
-            url: '/todo/savechanges',
+            url: '/todo/savechanges.do',
             type: 'POST',
             data: JSON.stringify({
                 name: $('#name').val(),
@@ -58,7 +72,6 @@
             }),
             dataType: 'json'
         }).done(function () {
-            window.location.href = "/todo/welcome/index.html";
         }).fail(function () {
             console.log("Error");
         });
@@ -69,7 +82,7 @@
     <div class="row">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="/todo/">Все</a>
+                <a class="nav-link" href="/todo/index.html">Все</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/todo/done.html">Выполненные</a>
@@ -78,7 +91,7 @@
                 <a class="nav-link" href="/todo/new.html">Новые</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/todo/welcome/index.html" onclick="logout();">Выйти</a>
+                <a class="nav-link" href="/todo/login.jsp" onclick="logout();">Выйти</a>
             </li>
         </ul>
     </div>

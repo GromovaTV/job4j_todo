@@ -15,7 +15,9 @@ public class IndexService {
     public void handleGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
-        String json = GSON.toJson(HbnStore.instOf().findAll());
+        var res = HbnStore.instOf().findAll();
+        System.out.println(res);
+        String json = GSON.toJson(res);
         output.write(json.getBytes(StandardCharsets.UTF_8));
         output.flush();
         output.close();
