@@ -1,9 +1,8 @@
 package model;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +15,8 @@ public class Item {
     private int id;
     private String name;
     private String description = "";
-    private Timestamp created;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
     private boolean done;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -34,11 +34,11 @@ public class Item {
     public Item(String name, String description, boolean done) {
         this.name = name;
         this.description = description;
-        this.created = Timestamp.valueOf(LocalDateTime.now());
+        this.created = new Date(System.currentTimeMillis());
         this.done = done;
     }
 
-    public Item(String name, Timestamp created, boolean done) {
+    public Item(String name, Date created, boolean done) {
         this.name = name;
         this.description = description;
         this.created = created;
@@ -69,14 +69,6 @@ public class Item {
         this.name = name;
     }
 
-    public Timestamp getCreated() {
-        return created;
-    }
-
-    public void setCreated(Timestamp created) {
-        this.created = created;
-    }
-
     public boolean isDone() {
         return done;
     }
@@ -91,6 +83,14 @@ public class Item {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
     public Set<Category> getCtgrs() {

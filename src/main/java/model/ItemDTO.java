@@ -1,14 +1,14 @@
 package model;
 
-import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Date;
 
 public class ItemDTO {
     private int id;
     private String name;
     private String description = "";
     private boolean done;
-    private Timestamp created;
+    private Date created;
 
     private String[] ctgrs;
 
@@ -55,11 +55,11 @@ public class ItemDTO {
         this.ctgrs = ctgrs;
     }
 
-    public Timestamp getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(Timestamp created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 
