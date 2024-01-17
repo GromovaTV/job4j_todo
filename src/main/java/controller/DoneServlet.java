@@ -1,6 +1,7 @@
 package controller;
 
 import service.DoneService;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class DoneServlet extends HttpServlet {
+
     private DoneService service = new DoneService();
 
     @Override

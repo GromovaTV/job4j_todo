@@ -1,6 +1,7 @@
 package controller;
 
 import service.SaveChangesService;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class SaveChangesServlet extends HttpServlet {
+
     private SaveChangesService service = new SaveChangesService();
 
     @Override

@@ -6,6 +6,7 @@ import model.Item;
 import model.ItemDTO;
 import model.User;
 import persistence.HbnStore;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public class AddService {
+
     private static final Gson GSON = new GsonBuilder().create();
 
     public void handleGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -30,7 +32,6 @@ public class AddService {
     }
 
     public void handlePost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        System.out.println("START ADD SERVLET post");
         ItemDTO itemDTO = GSON.fromJson(req.getReader(), ItemDTO.class);
         System.out.println(itemDTO);
         Item item = new Item();
@@ -46,6 +47,5 @@ public class AddService {
         System.out.println("print cIds");
         System.out.println(Arrays.toString(cIds));
         HbnStore.instOf().addItem(item, cIds);
-        System.out.println("FINISH ADD SERVLET post");
     }
 }

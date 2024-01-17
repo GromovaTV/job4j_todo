@@ -9,18 +9,26 @@ import java.util.Set;
 @Entity
 @Table(name = "items")
 public class Item {
+
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String name;
+
     private String description = "";
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
+
     private boolean done;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Category> ctgrs = new HashSet<>();
 

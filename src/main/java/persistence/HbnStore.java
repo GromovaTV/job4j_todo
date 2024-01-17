@@ -10,27 +10,32 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Function;
 
 public class HbnStore implements Store, AutoCloseable {
+
     private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .configure().build();
     private final SessionFactory sf = new MetadataSources(registry)
                 .buildMetadata().buildSessionFactory();
 
     private static final class Lazy {
-        private static Store INST;
+
+        private static Store inst;
     }
+
     private HbnStore() {
     }
+
     public static Store instOf() {
-        if (Lazy.INST == null) {
-            Lazy.INST = new HbnStore();
+        if (Lazy.inst == null) {
+            Lazy.inst = new HbnStore();
         }
-        return Lazy.INST;
+        return Lazy.inst;
     }
 
     private <T> T tx(final Function<Session, T> command) {
